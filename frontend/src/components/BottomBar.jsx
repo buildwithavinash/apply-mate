@@ -1,11 +1,13 @@
+import { useNavigate } from "react-router-dom"
 
 const BottomBar = () => {
+  const navigate = useNavigate();
   return (
     <div className="fixed bottom-0 right-0 left-0">
         <div>
-            <button>Dashboard</button>
-            <button>Create</button>
-            <button>Jobs</button>
+            <button onClick={()=> navigate('/dashboard')}>Dashboard</button>
+            <button onClick={()=> navigate('/createjob')}>Create</button>
+            <button onClick={()=> navigate('/jobsmenu')}>Jobs</button>
         </div>
     </div>
   )

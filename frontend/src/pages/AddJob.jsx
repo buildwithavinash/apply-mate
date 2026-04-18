@@ -3,6 +3,7 @@ import Container from "../components/Container";
 
 const AddJob = () => {
   const [formData, setFormData] = useState({
+    id: crypto.randomUUID(),
     companyName: "",
     jobRole: "",
     status: "applied",
@@ -21,9 +22,20 @@ const AddJob = () => {
 
   function handleSubmit(e){
     e.preventDefault();
+    if(!formData.companyName.trim() || !formData.jobRole.trim()){
+        alert("Company name and role are required");
+        return;
+    }
     console.log(formData);
 
-    localStorage.setItem('')
+    setFormData({
+  companyName: "",
+  jobRole: "",
+  status: "applied",
+  date: getTodayDate(),
+  jobLink: "",
+  notes: "",
+});
   }
 
   function getTodayDate() {
