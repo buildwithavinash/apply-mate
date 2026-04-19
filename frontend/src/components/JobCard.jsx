@@ -1,10 +1,15 @@
 import { useJobs } from "../hooks/useJobs"
 import { formatDate } from "../utils/formatDate"
+import { useState } from "react";
+import ModalEdit from "./ModalEdit";
 
 
 const JobCard = ({job}) => {
+const [isOpen, setIsOpen] = useState(false);
+    const [editingJob, setEditingJob] = useState(null);
 
     const {dispatch} = useJobs()
+
     function handleDelete(id){
         dispatch({
             type: 'DELETE_JOB',
@@ -12,7 +17,13 @@ const JobCard = ({job}) => {
         })
     }
 
+    function handleEdit(){
+        setIsOpen(true);
+        setEditingJob(job)
+    }
+
   return (
+    <>
     <div className="border border-zinc-300 px-2 py-3 rounded-md flex flex-col gap-2">
         <div className="flex flex-col">
             <h2 className="text-2xl font-semibold">{job.companyName}</h2>
@@ -21,10 +32,13 @@ const JobCard = ({job}) => {
             <p className="text-xs">{formatDate(job.date)}</p>
         </div>  
         <div className="flex items-center w-full gap-1 mt-auto">
-            <button className="border text-sky-500 font-medium bg-sky-100 border-sky-400 rounded-lg px-2 py-1 cursor-pointer flex-1">Edit</button>
+            <button onClick={handleEdit} className="border text-sky-500 font-medium bg-sky-100 border-sky-400 rounded-lg px-2 py-1 cursor-pointer flex-1">Edit</button>
             <button onClick={()=>handleDelete(job.id)} className="border border-red-400 bg-red-100 text-red-500 font-medium rounded-lg px-2 py-1 cursor-pointer flex-1">Delete</button>
         </div>
     </div>
+
+    {isOpen && <ModalEdit isOpen={isOpen} setIsOpen={setIsOpen} setEditingJob={setEditingJob} editingJob={editingJob}/>}
+    </>
   )
 }
 
