@@ -20,7 +20,7 @@ const AddJob = () => {
     }));
   }
 
-  function handleSubmit(e){
+  function createJob(e){
     e.preventDefault();
     if(!formData.companyName.trim() || !formData.jobRole.trim()){
         alert("Company name and role are required");
@@ -49,7 +49,7 @@ const AddJob = () => {
     <section className="min-h-screen py-16">
       <Container>
         <div>
-          <form onSubmit={handleSubmit}  className="border border-slate-200 p-2 flex flex-col gap-4">
+          <form onSubmit={createJob}  className="border border-slate-200 p-2 flex flex-col gap-4">
             <div className="flex flex-col gap-0.5">
               <label htmlFor="companyName" className="text-lg">
                 Company Name
