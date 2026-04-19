@@ -1,16 +1,19 @@
 import { useState } from "react";
 import Container from "../components/Container";
+import { useJobs } from "../hooks/useJobs";
 
 const AddJob = () => {
   const [formData, setFormData] = useState({
     id: crypto.randomUUID(),
     companyName: "",
     jobRole: "",
-    status: "applied",
+    status: "Applied",
     date: getTodayDate(),
     jobLink: "",
     notes: "",
   });
+
+  const {dispatch} = useJobs()
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -28,14 +31,10 @@ const AddJob = () => {
     }
     console.log(formData);
 
-    setFormData({
-  companyName: "",
-  jobRole: "",
-  status: "applied",
-  date: getTodayDate(),
-  jobLink: "",
-  notes: "",
-});
+  dispatch({
+    type: 'ADD_JOB',
+    payload: formData
+  })
   }
 
   function getTodayDate() {
@@ -90,12 +89,12 @@ const AddJob = () => {
                 value={formData.status}
                 onChange={handleChange}
               >
-                <option value="applied">
+                <option value="Applied">
                   Applied
                 </option>
-                <option value="interviewing">Interviewing</option>
-                <option value="rejected">Rejected</option>
-                <option value="offer">Offer</option>
+                <option value="Interviewing">Interviewing</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Offer">Offer</option>
               </select>
             </div>
 

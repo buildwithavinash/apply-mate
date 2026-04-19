@@ -13,10 +13,12 @@ export const JobProvider = ({children}) => {
         return storedJobs ? {jobs: JSON.parse(storedJobs)} : initialState
     });
 
+    console.log(state);
+
     useEffect(()=> {
         localStorage.setItem('jobs', JSON.stringify(state.jobs))
     }, [state.jobs])
-    
+
     return (
         <JobContext.Provider value={{jobs: state.jobs, dispatch}}>
             {children}
