@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+
+@theme {
+   --color-pale-sky-50: #e5f3ff;
+--color-pale-sky-100: #cce6ff;
+--color-pale-sky-200: #99ceff;
+--color-pale-sky-300: #66b5ff;
+--color-pale-sky-400: #339cff;
+--color-pale-sky-500: #0084ff;
+--color-pale-sky-600: #0069cc;
+--color-pale-sky-700: #004f99;
+--color-pale-sky-800: #003566;
+--color-pale-sky-900: #001a33;
+--color-pale-sky-950: #001224;
+}
