@@ -114,11 +114,11 @@ const Dashboard = () => {
             </div>
 
             <div>
-              <button onClick={()=> navigate('/jobsmenu')} className="bg-pale-sky-500 px-3 py-1 rounded-md font-medium text-pale-sky-50 cursor-pointer hover:opacity-90 mt-4 transition-all duration-200">Show All Applications</button>
+              <button onClick={()=> navigate('/jobsmenu')} className="bg-pale-sky-500 px-3 py-1 rounded-md font-medium text-pale-sky-50 cursor-pointer hover:opacity-90 mt-4 transition-all duration-200 mb-2">Show All Applications</button>
             </div>
           </div>
         </div>
-      </Container>
+      </Container>      
     </section>
   )
 }
