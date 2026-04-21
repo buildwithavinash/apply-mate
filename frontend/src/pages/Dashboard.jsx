@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Container from "../components/Container"
 import { useJobs } from "../hooks/useJobs"
-import { formatDate } from "../utils/formatDate";
+import RecentJobCard from "../components/RecentJobCard";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Dashboard = () => {
   const rejectedLength = jobs.filter(job => job.status === 'Rejected').length;
 
   return (
-    <section className="min-h-screen bg-white py-8">
+    <section className="min-h-screen bg-white pt-8 pb-16">
       <Container>
         <div>
 
@@ -88,28 +88,7 @@ const Dashboard = () => {
 
             <div className="grid grid-cols-1 gap-4 mt-4"> 
             {jobs.reverse().slice(0, 5).map(job => (
-              <div className="border border-zinc-200 bg-pale-sky-50 px-2 py-1.5 rounded-xl flex justify-between">
-                <div className="flex flex-col items-start">
-                  <h2 className="font-medium text-lg">
-                {job.companyName}
-                  </h2>
-
-                  <p className="text-slate-800">
-                    {job.jobRole}
-                  </p>
-
-                  <div className="text-xs">
-                    {formatDate(job.date)}
-                  </div>
-                </div>
-
-
-                <div className="flex items-start">
-                  <p className="border rounded-full px-3 py-0.5 text-xs">
-                  {job.status}
-                  </p>
-                </div>
-              </div>
+              <RecentJobCard key={job.id} job={job}/>
             ))}
             </div>
 
