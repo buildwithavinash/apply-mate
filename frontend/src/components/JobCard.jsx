@@ -6,7 +6,6 @@ import ModalEdit from "./ModalEdit";
 const JobCard = ({ job }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editingJob, setEditingJob] = useState(null);
-
   const { dispatch } = useJobs();
 
   function handleDelete(id) {
@@ -21,10 +20,21 @@ const JobCard = ({ job }) => {
     setEditingJob(job);
   }
 
+  const getStatusStyles = (status) => {
+  const styles = {
+    Applied: 'bg-blue-100 text-blue-700 border-blue-300',
+    Interviewing: 'bg-orange-100 text-orange-700 border-orange-300',
+    Rejected: 'bg-red-100 text-red-700 border-red-300',
+    Offer: 'bg-green-100 text-green-700 border-green-300',
+  };
+  return styles[status] || styles.Applied;
+};
+
+
   return (
     <>
       <div className="relative border border-zinc-200 px-2 py-3 rounded-md flex flex-col gap-2 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer">
-        <p className="absolute top-3 right-2 border rounded-full w-fit px-4 py-0.5 text-xs">
+        <p className={`absolute top-3 right-2 rounded-full w-fit px-4 py-0.5 text-xs ${getStatusStyles(job.status)}`}>
             {job.status}
           </p>
         <div className="flex flex-col">
