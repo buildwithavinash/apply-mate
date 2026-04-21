@@ -33,13 +33,13 @@ const Dashboard = () => {
 
             {/* interview */}
             <div className="border border-zinc-300 bg-gray-50 p-1.5 rounded-md flex flex-col gap-2 items-center justify-center">
-              <p className="font-semibold text-yellow-400">Interview</p>
+              <p className="font-semibold text-orange-400">Interview</p>
               <div className="text-2xl flex  gap-1 items-baseline">
-                <p className="text-3xl font-bold text-yellow-400">
+                <p className="text-3xl font-bold text-orange-400">
                   {interviewLength}
                 </p>
 
-                <p className="text-base text-yellow-400">
+                <p className="text-base text-orange-400">
                ({Math.floor((interviewLength / jobs.length) * 100)}%)
                 </p>
               </div>

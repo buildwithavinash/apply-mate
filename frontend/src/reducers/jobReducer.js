@@ -1,4 +1,5 @@
 export function jobReducer(state, action) {
+       console.log(state);
     switch(action.type){
         case "ADD_JOB":
             return {
@@ -18,4 +19,6 @@ export function jobReducer(state, action) {
         default:
             return state;
     }
+
+  
 }

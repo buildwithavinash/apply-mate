@@ -4,7 +4,6 @@ import { useJobs } from "../hooks/useJobs";
 
 const AddJob = () => {
   const [formData, setFormData] = useState({
-    id: crypto.randomUUID(),
     companyName: "",
     jobRole: "",
     status: "Applied",
@@ -29,11 +28,15 @@ const AddJob = () => {
         alert("Company name and role are required");
         return;
     }
-    console.log(formData);
+
+    const newJob = {
+      ...formData, 
+      id: crypto.randomUUID()
+    }
 
   dispatch({
     type: 'ADD_JOB',
-    payload: formData
+    payload: newJob
   })
   }
 
@@ -44,6 +47,7 @@ const AddJob = () => {
     const dd = String(today.getDate()).padStart(2, "0");
     return `${yyyy}-${mm}-${dd}`;
   }
+
   return (
     <section className="min-h-screen py-12">
       <Container>
