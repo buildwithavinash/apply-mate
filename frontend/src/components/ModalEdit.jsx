@@ -24,7 +24,7 @@ const ModalEdit = ({isOpen, setIsOpen, setEditingJob, editingJob}) => {
 
         setLoading(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/jobs/${editingJob._id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs/${editingJob._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
