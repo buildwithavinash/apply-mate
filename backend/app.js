@@ -1,9 +1,11 @@
 import express from 'express';
 import jobRoutes from './routes/jobRoutes.js'
+import cors from 'cors'
 
 const app = express();
 
 // middleware
+app.use(cors());
 app.use(express.json());
 
 

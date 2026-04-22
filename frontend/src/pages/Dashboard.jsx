@@ -6,10 +6,10 @@ import RecentJobCard from "../components/RecentJobCard";
 const Dashboard = () => {
   const navigate = useNavigate();
   const {jobs} = useJobs();
-  const appliedLength = jobs.filter(job => job.status === 'Applied').length;
-  const interviewLength = jobs.filter(job => job.status === 'Interviewing').length;
-  const offerLength = jobs.filter(job => job.status === 'Offer').length;
-  const rejectedLength = jobs.filter(job => job.status === 'Rejected').length;
+  const appliedLength = jobs.filter(job => job.status === 'applied').length;
+  const interviewLength = jobs.filter(job => job.status === 'interviewing').length;
+  const offerLength = jobs.filter(job => job.status === 'offer').length;
+  const rejectedLength = jobs.filter(job => job.status === 'rejected').length;
 
   return (
     <section className="min-h-screen bg-white pt-8 pb-16">

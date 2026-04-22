@@ -1,5 +1,4 @@
 export function jobReducer(state, action) {
-       console.log(state);
     switch(action.type){
         case "ADD_JOB":
             return {
@@ -8,17 +7,21 @@ export function jobReducer(state, action) {
         
         case "DELETE_JOB":
             return {
-                ...state, jobs: state.jobs.filter(job => job.id !== action.payload)
+                ...state, jobs: state.jobs.filter(job => job._id !== action.payload)
             }
 
         case "EDIT_JOB": 
             return {
-                ...state, jobs: state.jobs.map(job => job.id === action.payload.id ? action.payload : job)
+                ...state, jobs: state.jobs.map(job => job._id === action.payload._id ? action.payload : job)
             };
+        
+        case "SET_JOBS":
+            return {
+                ...state,
+                jobs: action.payload
+            }
         
         default:
             return state;
     }
-
-  
 }

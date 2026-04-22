@@ -6,12 +6,13 @@ const AddJob = () => {
   const [formData, setFormData] = useState({
     companyName: "",
     jobRole: "",
-    status: "Applied",
+    status: "applied",
     date: getTodayDate(),
     jobLink: "",
     notes: "",
   });
-
+  
+  const [loading, setLoading] = useState(false);
   const {dispatch} = useJobs()
 
   function handleChange(e) {
@@ -22,22 +23,51 @@ const AddJob = () => {
     }));
   }
 
-  function createJob(e){
+  async function createJob(e){
     e.preventDefault();
     if(!formData.companyName.trim() || !formData.jobRole.trim()){
         alert("Company name and role are required");
         return;
     }
 
-    const newJob = {
-      ...formData, 
-      id: crypto.randomUUID()
-    }
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:5000/api/jobs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
 
-  dispatch({
-    type: 'ADD_JOB',
-    payload: newJob
-  })
+      if(!res.ok) {
+        throw new Error('Failed to add job');
+      }
+
+      const newJob = await res.json();
+      
+      dispatch({
+        type: 'ADD_JOB',
+        payload: newJob
+      });
+
+      // Reset form
+      setFormData({
+        companyName: "",
+        jobRole: "",
+        status: "applied",
+        date: getTodayDate(),
+        jobLink: "",
+        notes: "",
+      });
+      
+      alert("Job added successfully!");
+    } catch(err) {
+      console.log("Error adding job:", err);
+      alert("Failed to add job: " + err.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function getTodayDate() {
@@ -94,12 +124,10 @@ const AddJob = () => {
                 onChange={handleChange}
                 className="border border-zinc-300 outline-none focus:border-pale-sky-300 rounded-md px-2 py-1 transition-all duration-200 w-full"
               >
-                <option value="Applied">
-                  Applied
-                </option>
-                <option value="Interviewing">Interviewing</option>
-                <option value="Rejected">Rejected</option>
-                <option value="Offer">Offer</option>
+                <option value="applied">Applied</option>
+                <option value="interviewing">Interviewing</option>
+                <option value="rejected">Rejected</option>
+                <option value="offer">Offer</option>
               </select>
             </div>
 
@@ -146,9 +174,10 @@ const AddJob = () => {
 
             <button
               type="submit"
-              className="bg-pale-sky-500 px-3 py-1 rounded-md font-medium text-pale-sky-50 cursor-pointer hover:opacity-90 mb-2 transition-all duration-200"
+              disabled={loading}
+              className="bg-pale-sky-500 px-3 py-1 rounded-md font-medium text-pale-sky-50 cursor-pointer hover:opacity-90 mb-2 transition-all duration-200 disabled:opacity-50"
             >
-              Add
+              {loading ? "Adding..." : "Add"}
             </button>
           </form>
         </div>
