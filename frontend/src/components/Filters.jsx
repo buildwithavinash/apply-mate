@@ -12,10 +12,10 @@ const Filters = ({currentFilter, setCurrentFilter, query, setQuery}) => {
             <div className="flex-1 flex items-center w-full bg-pale-sky-50">
                 <select value={currentFilter} onChange={(e)=> setCurrentFilter(e.target.value)} className="w-full px-2 outline-none">
                     <option value="all">All</option>
-                    <option value="Applied">Applied</option>
-                    <option value="Interviewing">Interview</option>
-                    <option value="Offer">Offer</option>
-                    <option value="Rejected">Rejected</option>
+                    <option value="applied">Applied</option>
+                    <option value="interviewing">Interview</option>
+                    <option value="offer">Offer</option>
+                    <option value="rejected">Rejected</option>
                 </select>
             </div>
         </div>

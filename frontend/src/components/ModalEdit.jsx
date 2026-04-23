@@ -1,7 +1,7 @@
 import { useJobs } from "../hooks/useJobs";
 import { useState } from "react";
 
-const ModalEdit = ({isOpen, setIsOpen, setEditingJob, editingJob}) => {
+const ModalEdit = ({ setIsOpen, setEditingJob, editingJob}) => {
 
     const {dispatch} = useJobs();
     const [loading, setLoading] = useState(false);
@@ -55,10 +55,9 @@ const ModalEdit = ({isOpen, setIsOpen, setEditingJob, editingJob}) => {
     }
     
   return (
-    <div className="fixed inset-0 bg-slate-900/20 backdrop-blur-xl flex items-center justify-center">
+    <div className="fixed inset-0 bg-slate-900/20 backdrop-blur-xl flex items-center justify-center z-20">
 
-    
-    
+
     <div>
         <form onSubmit={updateJob}  className="relative border border-slate-200 bg-slate-200 rounded-xl px-4 py-6 flex flex-col gap-4">
             <div className="flex flex-col gap-0.5">

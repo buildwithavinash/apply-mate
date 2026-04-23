@@ -1,6 +1,7 @@
 import Container from "../components/Container"
 import Filters from "../components/Filters";
 import JobCard from "../components/JobCard";
+import Skeleton from "../components/Skeleton";
 import { useJobs } from "../hooks/useJobs";
 import { useState } from "react";
 
@@ -8,6 +9,7 @@ const JobsMenu = () => {
     const [query, setQuery] = useState('');
     const [currentFilter, setCurrentFilter] = useState('all');
     const {jobs} = useJobs();
+    const {loading} = useJobs();
 
     const filteredJobs = jobs.filter(job => {
 
@@ -26,12 +28,31 @@ const JobsMenu = () => {
 
                 <Filters query={query} setQuery={setQuery} currentFilter={currentFilter} setCurrentFilter={setCurrentFilter}/>
 
+{loading && (
+    <div className="grid grid-cols-1 gap-8 mt-6">
+        {
+ [1, 2, 3, 4, 5].map((_, index) => {
+      return  <Skeleton key={index} />
+    })
+        }
+    </div>
+   
+)}
+
                 <div className="grid grid-cols-1 gap-8 mt-6">
                     {/* jobs card */}
-                    {filteredJobs.map(job => {
+
+                    {filteredJobs.length === 0 ? (
+                        <p className="text-center text-slate-500">No jobs yet. <br /> Create jobs to start tracking.</p>
+                    ) : (
+                         filteredJobs.map(job => {
                         return <JobCard key={job.id} job={job}/>
-                    })}
+                    })
+                    )}
+                   
                 </div>
+
+                
             </div>
         </Container>
     </section>

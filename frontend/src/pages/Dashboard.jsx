@@ -11,6 +11,13 @@ const Dashboard = () => {
   const offerLength = jobs.filter(job => job.status === 'offer').length;
   const rejectedLength = jobs.filter(job => job.status === 'rejected').length;
 
+  const getJobPercentage = (length) => {
+    if(jobs.length === 0){
+      return `${0}%`
+    }
+      return `(${Math.floor((length / jobs.length) * 100)}%)`
+  }
+
   return (
     <section className="min-h-screen bg-white pt-8 pb-16">
       <Container>
@@ -39,8 +46,8 @@ const Dashboard = () => {
                   {interviewLength}
                 </p>
 
-                <p className="text-base text-orange-400">
-               ({Math.floor((interviewLength / jobs.length) * 100)}%)
+                <p className="text-xs text-orange-400">
+               {getJobPercentage(interviewLength)}
                 </p>
               </div>
             </div>
@@ -53,8 +60,8 @@ const Dashboard = () => {
                   {rejectedLength}
                 </p>
 
-                <p className="text-base text-rose-500">
-               ({Math.floor((rejectedLength / jobs.length) * 100)}%)
+                <p className="text-xs text-rose-500">
+              {getJobPercentage(rejectedLength)}
                 </p>
               </div>
             </div>
@@ -63,12 +70,12 @@ const Dashboard = () => {
             <div className="border border-zinc-300 p-1.5 bg-gray-50 rounded-md flex flex-col gap-2 items-center justify-center">
               <p className="font-semibold text-emerald-600">Offer</p>
               <div className="text-2xl flex  gap-1 items-baseline">
-                <p className="font-bold text-emerald-500">
+                <p className="text-3xl font-bold text-emerald-500">
                   {offerLength}
                 </p>
 
-                <p className="text-base text-emerald-500">
-               ({Math.floor((offerLength / jobs.length) * 100)}%)
+                <p className="text-xs text-emerald-500">
+               {getJobPercentage(offerLength)}
                 </p>
               </div>
             </div>
@@ -86,15 +93,25 @@ const Dashboard = () => {
 
 <hr className="my-4 text-zinc-300 font-bold" />
 
-            <div className="grid grid-cols-1 gap-4 mt-4"> 
-            {jobs.reverse().slice(0, 5).map(job => (
+            <div className="grid grid-cols-1 gap-4 mt-4 py-4"> 
+
+              {jobs.length === 0 ? (
+                        <p className="text-center text-slate-500">No jobs yet. <br /> Create jobs to start tracking.</p>
+                    ) : (
+                         jobs.reverse().slice(0, 5).map(job => (
               <RecentJobCard key={job.id} job={job}/>
-            ))}
+            ))
+                    )}
+                   
+           
             </div>
 
-            <div>
+            {jobs.length !== 0 && (
+                <div>
               <button onClick={()=> navigate('/jobsmenu')} className="bg-pale-sky-500 px-3 py-1 rounded-md font-medium text-pale-sky-50 cursor-pointer hover:opacity-90 mt-4 transition-all duration-200 mb-2">Show All Applications</button>
             </div>
+            )}
+            
           </div>
         </div>
       </Container>      
