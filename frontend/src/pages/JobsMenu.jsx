@@ -21,7 +21,7 @@ const JobsMenu = () => {
 }).filter(job => job.companyName.toLowerCase().includes(query.toLowerCase()));
 
   return (
-    <section className="min-h-screen bg-white py-8">
+    <section className="min-h-screen bg-white py-16">
         <Container>
             <div>
                 <h2 className="text-center text-3xl font-medium">Your Applications</h2>

@@ -79,7 +79,7 @@ const AddJob = () => {
   }
 
   return (
-    <section className="min-h-screen pt-5 pb-12">
+    <section className="min-h-screen py-16">
       <Container>
         <div>
           <form onSubmit={createJob}  className="border border-slate-200 rounded-md p-2 flex flex-col gap-6">
