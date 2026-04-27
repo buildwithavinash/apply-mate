@@ -2,7 +2,10 @@ import { Job } from "../models/Job.js";
 
 export const createJob = async (req, res) => {
     try {
-        const job = await Job.create(req.body);
+        const job = await Job.create({
+            ...req.body,
+            user: req.user._id
+        });
         res.status(201).json(job);
     }catch(err) {
         res.status(500).json({
@@ -13,7 +16,7 @@ export const createJob = async (req, res) => {
 
 export const getJobs = async (req, res) => {
     try {
-        const jobs = await Job.find().sort({createdAt: -1});
+        const jobs = await Job.find({user: req.user._id}).sort({createdAt: -1});
         res.status(200).json(jobs);
     }catch(err){
         res.status(500).json({
