@@ -1,5 +1,6 @@
 import express from 'express';
 import jobRoutes from './routes/jobRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 import cors from 'cors'
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 
 // connect routes
 app.use('/api/jobs', jobRoutes);
+app.use('/api/auth', authRoutes)
 
 
 // route
