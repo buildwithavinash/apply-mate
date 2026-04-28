@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Container from "../components/Container";
 import { useJobs } from "../hooks/useJobs";
+import { useAuth } from "../hooks/useAuth";
+import { API_URL, authHeaders } from "../utils/api";
 
 const AddJob = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +16,7 @@ const AddJob = () => {
   
   const [loading, setLoading] = useState(false);
   const {dispatch} = useJobs()
+  const { token } = useAuth();
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -32,10 +35,11 @@ const AddJob = () => {
 
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs`, {
+      const res = await fetch(`${API_URL}/api/jobs`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          ...authHeaders(token)
         },
         body: JSON.stringify(formData)
       });

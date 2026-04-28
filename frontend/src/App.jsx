@@ -5,6 +5,8 @@ import AddJob from "./pages/AddJob"
 import Dashboard from "./pages/Dashboard"
 import Navbar from "./components/Navbar"
 import SignUp from "./pages/SignUp"
+import Login from "./pages/Login"
+import ProtectedRoute from "./components/ProtectedRoute"
 
 const App = () => {
   return (
@@ -13,10 +15,13 @@ const App = () => {
     <BottomBar />
     <Routes>
       <Route path="/signup" element={<SignUp/>}/>
-      <Route path="/" element={<Navigate to='/dashboard' />}/>
-      <Route path="/jobsmenu" element={<JobsMenu/>}/>
-      <Route path="/createjob" element={<AddJob/>} />
-      <Route path="/dashboard" element={<Dashboard/>} />
+      <Route path="/login" element={<Login/>}/>
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Navigate to='/dashboard' replace />}/>
+        <Route path="/jobsmenu" element={<JobsMenu/>}/>
+        <Route path="/createjob" element={<AddJob/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
+      </Route>
     </Routes>
     </>
   )

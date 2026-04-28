@@ -2,20 +2,24 @@ import { useJobs } from "../hooks/useJobs";
 import { formatDate } from "../utils/formatDate";
 import { useState } from "react";
 import ModalEdit from "./ModalEdit";
+import { useAuth } from "../hooks/useAuth";
+import { API_URL, authHeaders } from "../utils/api";
 
 const JobCard = ({ job }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editingJob, setEditingJob] = useState(null);
   const [loading, setLoading] = useState(false);
   const { dispatch } = useJobs();
+  const { token } = useAuth();
 
   async function handleDelete(id) {
     if(!window.confirm("Are you sure you want to delete this job?")) return;
     
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs/${id}`, {
-        method: 'DELETE'
+      const res = await fetch(`${API_URL}/api/jobs/${id}`, {
+        method: 'DELETE',
+        headers: authHeaders(token)
       });
 
       if(!res.ok) {

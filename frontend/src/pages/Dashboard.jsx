@@ -98,8 +98,8 @@ const Dashboard = () => {
               {jobs.length === 0 ? (
                         <p className="text-center text-slate-500">No jobs yet. <br /> Create jobs to start tracking.</p>
                     ) : (
-                         jobs.reverse().slice(0, 5).map(job => (
-              <RecentJobCard key={job.id} job={job}/>
+                         [...jobs].slice(0, 5).map(job => (
+              <RecentJobCard key={job._id} job={job}/>
             ))
                     )}
                    

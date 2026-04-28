@@ -8,8 +8,7 @@ import { useState } from "react";
 const JobsMenu = () => {
     const [query, setQuery] = useState('');
     const [currentFilter, setCurrentFilter] = useState('all');
-    const {jobs} = useJobs();
-    const {loading} = useJobs();
+    const {jobs, loading} = useJobs();
 
     const filteredJobs = jobs.filter(job => {
 
@@ -46,7 +45,7 @@ const JobsMenu = () => {
                         <p className="text-center text-slate-500">No jobs yet. <br /> Create jobs to start tracking.</p>
                     ) : (
                          filteredJobs.map(job => {
-                        return <JobCard key={job.id} job={job}/>
+                        return <JobCard key={job._id} job={job}/>
                     })
                     )}
                    

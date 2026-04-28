@@ -57,6 +57,12 @@ export const loginUser = async (req, res) => {
             })
         }
 
+        if(!process.env.JWT_SECRET){
+            return res.status(500).json({
+                message: "JWT secret is not configured"
+            });
+        }
+
         //create token
         const token = jwt.sign({
             id: user._id

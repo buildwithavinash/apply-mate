@@ -1,9 +1,12 @@
 import { useJobs } from "../hooks/useJobs";
 import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
+import { API_URL, authHeaders } from "../utils/api";
 
 const ModalEdit = ({ setIsOpen, setEditingJob, editingJob}) => {
 
     const {dispatch} = useJobs();
+    const { token } = useAuth();
     const [loading, setLoading] = useState(false);
 
     function handleChange(e) {
@@ -24,10 +27,11 @@ const ModalEdit = ({ setIsOpen, setEditingJob, editingJob}) => {
 
         setLoading(true);
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs/${editingJob._id}`, {
+            const res = await fetch(`${API_URL}/api/jobs/${editingJob._id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    ...authHeaders(token)
                 },
                 body: JSON.stringify(editingJob)
             });
