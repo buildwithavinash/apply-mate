@@ -2,6 +2,7 @@ import { useState } from "react";
 import Container from "../components/Container";
 import { useJobs } from "../hooks/useJobs";
 import { useAuth } from "../hooks/useAuth";
+import { useToast } from "../hooks/useToast";
 import { API_URL, authHeaders } from "../utils/api";
 
 const AddJob = () => {
@@ -17,6 +18,7 @@ const AddJob = () => {
   const [loading, setLoading] = useState(false);
   const {dispatch} = useJobs()
   const { token } = useAuth();
+  const { showToast } = useToast();
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -29,7 +31,7 @@ const AddJob = () => {
   async function createJob(e){
     e.preventDefault();
     if(!formData.companyName.trim() || !formData.jobRole.trim()){
-        alert("Company name and role are required");
+        showToast("Company name and role are required", "error");
         return;
     }
 
@@ -65,10 +67,10 @@ const AddJob = () => {
         notes: "",
       });
       
-      alert("Job added successfully!");
+      showToast("Job created successfully", "success");
     } catch(err) {
       console.log("Error adding job:", err);
-      alert("Failed to add job: " + err.message);
+      showToast("Failed to add job: " + err.message, "error");
     } finally {
       setLoading(false);
     }

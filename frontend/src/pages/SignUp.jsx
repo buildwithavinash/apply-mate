@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
+import { useToast } from "../hooks/useToast";
 import { API_URL } from "../utils/api";
 
 const SignUp = () => {
     const navigate = useNavigate()
+    const { showToast } = useToast();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -39,9 +41,11 @@ const SignUp = () => {
                 throw new Error(data.message || "Unable to create account");
             }
 
+            showToast("Account created. Please log in.", "success");
             navigate('/login')
         } catch (err) {
             setError(err.message);
+            showToast(err.message, "error");
         } finally {
             setLoading(false);
         }

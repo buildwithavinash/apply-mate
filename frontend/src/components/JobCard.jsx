@@ -3,18 +3,20 @@ import { formatDate } from "../utils/formatDate";
 import { useState } from "react";
 import ModalEdit from "./ModalEdit";
 import { useAuth } from "../hooks/useAuth";
+import { useToast } from "../hooks/useToast";
 import { API_URL, authHeaders } from "../utils/api";
+import ConfirmDialog from "./ConfirmDialog";
 
 const JobCard = ({ job }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editingJob, setEditingJob] = useState(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { dispatch } = useJobs();
   const { token } = useAuth();
+  const { showToast } = useToast();
 
   async function handleDelete(id) {
-    if(!window.confirm("Are you sure you want to delete this job?")) return;
-    
     setLoading(true);
     try {
       const res = await fetch(`${API_URL}/api/jobs/${id}`, {
@@ -31,10 +33,11 @@ const JobCard = ({ job }) => {
         payload: id,
       });
 
-      alert("Job deleted successfully!");
+      showToast("Job deleted successfully", "success");
+      setDeleteDialogOpen(false);
     } catch(err) {
       console.log("Error deleting job:", err);
-      alert("Failed to delete job: " + err.message);
+      showToast("Failed to delete job: " + err.message, "error");
     } finally {
       setLoading(false);
     }
@@ -83,11 +86,11 @@ const capitalizeStatus = (status) => {
             Edit
           </button>
           <button
-            onClick={() => handleDelete(job._id)}
+            onClick={() => setDeleteDialogOpen(true)}
             disabled={loading}
             className="border border-red-400 bg-red-100 text-red-500 font-medium rounded-lg px-2 py-1 cursor-pointer flex-1 hover:opacity-70 transition-all duration-200 disabled:opacity-50"
           >
-            {loading ? "..." : "Delete"}
+            Delete
           </button>
         </div>
       </div>
@@ -98,6 +101,18 @@ const capitalizeStatus = (status) => {
           setIsOpen={setIsOpen}
           setEditingJob={setEditingJob}
           editingJob={editingJob}
+        />
+      )}
+
+      {deleteDialogOpen && (
+        <ConfirmDialog
+          title="Delete job?"
+          message={`This will permanently remove ${job.companyName} from your applications.`}
+          confirmText="Delete"
+          danger
+          loading={loading}
+          onCancel={() => setDeleteDialogOpen(false)}
+          onConfirm={() => handleDelete(job._id)}
         />
       )}
     </>

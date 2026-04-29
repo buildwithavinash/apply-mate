@@ -1,12 +1,14 @@
 import { useJobs } from "../hooks/useJobs";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { useToast } from "../hooks/useToast";
 import { API_URL, authHeaders } from "../utils/api";
 
 const ModalEdit = ({ setIsOpen, setEditingJob, editingJob}) => {
 
     const {dispatch} = useJobs();
     const { token } = useAuth();
+    const { showToast } = useToast();
     const [loading, setLoading] = useState(false);
 
     function handleChange(e) {
@@ -21,7 +23,7 @@ const ModalEdit = ({ setIsOpen, setEditingJob, editingJob}) => {
         e.preventDefault();
         
         if(!editingJob.companyName.trim() || !editingJob.jobRole.trim()){
-            alert("Company name and role are required");
+            showToast("Company name and role are required", "error");
             return;
         }
 
@@ -47,12 +49,12 @@ const ModalEdit = ({ setIsOpen, setEditingJob, editingJob}) => {
                 payload: updatedJob
             })
 
-            alert("Job updated successfully!");
+            showToast("Job updated successfully", "success");
             setIsOpen(false);
             setEditingJob(null);
         } catch(err) {
             console.log("Error updating job:", err);
-            alert("Failed to update job: " + err.message);
+            showToast("Failed to update job: " + err.message, "error");
         } finally {
             setLoading(false);
         }

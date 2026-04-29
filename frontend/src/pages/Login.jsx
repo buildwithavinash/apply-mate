@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { useToast } from "../hooks/useToast";
 import { API_URL } from "../utils/api";
 
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { showToast } = useToast();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -42,9 +44,11 @@ const Login = () => {
         }
 
         login(data);
+        showToast("Logged in successfully", "success");
         navigate("/dashboard");
       } catch (err) {
         setError(err.message);
+        showToast(err.message, "error");
       } finally {
         setLoading(false);
       }
