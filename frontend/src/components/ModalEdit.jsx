@@ -61,13 +61,18 @@ const ModalEdit = ({ setIsOpen, setEditingJob, editingJob}) => {
     }
     
   return (
-    <div className="fixed inset-0 bg-slate-900/20 backdrop-blur-xl flex items-center justify-center z-20">
+    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/30 px-4 py-6 backdrop-blur-sm">
 
 
-    <div>
-        <form onSubmit={updateJob}  className="relative border border-slate-200 bg-slate-200 rounded-xl px-4 py-6 flex flex-col gap-4">
+    <div className="w-full max-w-lg">
+        <form onSubmit={updateJob}  className="relative max-h-[calc(100vh-3rem)] overflow-y-auto rounded-md border border-zinc-200 bg-white p-5 shadow-xl flex flex-col gap-4">
+            <div className="pr-20">
+              <h2 className="text-xl font-semibold text-zinc-950">Edit application</h2>
+              <p className="text-sm text-zinc-500">Update the details for this role.</p>
+            </div>
+
             <div className="flex flex-col gap-0.5">
-              <label htmlFor="companyName" className="text-lg">
+              <label htmlFor="editCompanyName" className="text-sm font-medium text-zinc-700">
                 Company Name
               </label>
               <input
@@ -75,14 +80,15 @@ const ModalEdit = ({ setIsOpen, setEditingJob, editingJob}) => {
                 value={editingJob.companyName}
                 onChange={handleChange}
                 name="companyName"
-                id="companyName"
+                id="editCompanyName"
                 placeholder="Enter Company Name"
-                className="border border-slate-300 px-2 py-1"
+                required
+                className="rounded-md border border-zinc-300 px-3 py-2 outline-none transition focus:border-pale-sky-500"
               />
             </div>
 
             <div className="flex flex-col gap-0.5">
-              <label htmlFor="jobRole" className="text-lg">
+              <label htmlFor="editJobRole" className="text-sm font-medium text-zinc-700">
                 Job Role
               </label>
               <input
@@ -90,21 +96,23 @@ const ModalEdit = ({ setIsOpen, setEditingJob, editingJob}) => {
                 value={editingJob.jobRole}
                 onChange={handleChange}
                 name="jobRole"
-                id="jobRole"
+                id="editJobRole"
                 placeholder="Enter role"
-                className="border border-slate-300 px-2 py-1"
+                required
+                className="rounded-md border border-zinc-300 px-3 py-2 outline-none transition focus:border-pale-sky-500"
               />
             </div>
 
-            <div className="flex gap-0.5">
-              <label htmlFor="status" className="text-lg">
-                Status:{" "}
+            <div className="flex flex-col gap-0.5">
+              <label htmlFor="editStatus" className="text-sm font-medium text-zinc-700">
+                Status
               </label>
               <select
                 name="status"
-                id="status"
+                id="editStatus"
                 value={editingJob.status}
                 onChange={handleChange}
+                className="rounded-md border border-zinc-300 px-3 py-2 outline-none transition focus:border-pale-sky-500"
               >
                 <option value="applied">Applied</option>
                 <option value="interviewing">Interviewing</option>
@@ -113,55 +121,60 @@ const ModalEdit = ({ setIsOpen, setEditingJob, editingJob}) => {
               </select>
             </div>
 
-            <div className="flex gap-0.5">
-              <label htmlFor="date" className="text-lg">
-                Date Applied:{" "}
+            <div className="flex flex-col gap-0.5">
+              <label htmlFor="editDate" className="text-sm font-medium text-zinc-700">
+                Date Applied
               </label>
               <input
                 type="date"
                 name="date"
-                id="date"
+                id="editDate"
                 value={editingJob.date}
                 onChange={handleChange}
+                className="rounded-md border border-zinc-300 px-3 py-2 outline-none transition focus:border-pale-sky-500"
               />
             </div>
 
-            <div className="flex gap-0.5">
-              <label htmlFor="jobLink" className="text-lg">
-                Job Link:{" "}
+            <div className="flex flex-col gap-0.5">
+              <label htmlFor="editJobLink" className="text-sm font-medium text-zinc-700">
+                Job Link
               </label>
               <input
                 type="url"
                 name="jobLink"
-                id="jobLink"
-                className="border"
-                value={editingJob.jobLink}
+                id="editJobLink"
+                className="rounded-md border border-zinc-300 px-3 py-2 outline-none transition focus:border-pale-sky-500"
+                value={editingJob.jobLink || ""}
                 onChange={handleChange}
               />
             </div>
 
             <div className="flex flex-col gap-0.5">
-              <label htmlFor="notes" className="text-lg">
-                Notes (optional):{" "}
+              <label htmlFor="editNotes" className="text-sm font-medium text-zinc-700">
+                Notes
               </label>
               <textarea
                 name="notes"
-                id="notes"
-                className="border"
-                value={editingJob.notes}
+                id="editNotes"
+                rows="4"
+                className="resize-none rounded-md border border-zinc-300 px-3 py-2 outline-none transition focus:border-pale-sky-500"
+                value={editingJob.notes || ""}
                 onChange={handleChange}
               ></textarea>
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="px-4 cursor-pointer py-2 bg-sky-600 text-slate-100 font-medium rounded-md hover:opacity-90 disabled:opacity-50"
-            >
-              {loading ? "Updating..." : "Update"}
-            </button>
+            <div className="flex justify-end gap-2">
+              <button type="button" onClick={()=>{setIsOpen(false); setEditingJob(null)}} disabled={loading} className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 disabled:opacity-60">Cancel</button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="rounded-md bg-pale-sky-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-pale-sky-600 disabled:opacity-60"
+              >
+                {loading ? "Updating..." : "Update"}
+              </button>
+            </div>
 
-            <button type="button" onClick={()=>{setIsOpen(false); setEditingJob(null)}} className="absolute text-sm top-2 right-2 border border-red-500 px-3 py-0.5 rounded-md bg-red-200 text-red-500 cursor-pointer hover:opacity-80">Close</button>
+            <button type="button" onClick={()=>{setIsOpen(false); setEditingJob(null)}} disabled={loading} className="absolute right-4 top-4 rounded-md border border-zinc-300 px-3 py-1 text-sm font-medium text-zinc-600 transition hover:bg-zinc-50 disabled:opacity-60">Close</button>
           </form>
     </div>
 

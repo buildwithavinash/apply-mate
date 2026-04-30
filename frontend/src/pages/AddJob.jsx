@@ -100,6 +100,7 @@ const AddJob = () => {
                 name="companyName"
                 id="companyName"
                 placeholder="Enter Company Name"
+                required
                 className="border border-zinc-300 outline-none focus:border-pale-sky-300 rounded-md px-2 py-1 transition-all duration-200"
               />
             </div>
@@ -115,6 +116,7 @@ const AddJob = () => {
                 name="jobRole"
                 id="jobRole"
                 placeholder="Enter role"
+                required
                 className="border border-zinc-300 outline-none focus:border-pale-sky-300 rounded-md px-2 py-1 transition-all duration-200"
               />
             </div>

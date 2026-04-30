@@ -44,7 +44,7 @@ export const ToastProvider = ({ children }) => {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <div className="fixed right-4 top-16 z-100 flex w-[calc(100%-2rem)] max-w-sm flex-col gap-2">
+      <div className="fixed right-4 top-16 z-[100] flex w-[calc(100%-2rem)] max-w-sm flex-col gap-2">
         {toasts.map((toast) => {
           const style = toastStyles[toast.type] || toastStyles.info;
 

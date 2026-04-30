@@ -1,7 +1,4 @@
 import app from "./app.js";
-import dns from 'dns';
-dns.setServers([`1.1.1.1`])
-
 import dotenv from 'dotenv';
 import path from "path";
 import { fileURLToPath } from "url";
@@ -31,6 +28,7 @@ const startServer = async () => {
 })
     }catch(err){
         console.log(err);
+        process.exit(1);
     }
 }
 

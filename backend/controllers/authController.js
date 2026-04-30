@@ -5,9 +5,23 @@ import jwt from 'jsonwebtoken';
 export const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
+        const trimmedName = name?.trim();
+        const normalizedEmail = email?.trim().toLowerCase();
+
+        if(!trimmedName || !normalizedEmail || !password){
+            return res.status(400).json({
+                message: "Name, email, and password are required"
+            });
+        }
+
+        if(password.length < 6){
+            return res.status(400).json({
+                message: "Password must be at least 6 characters"
+            });
+        }
 
         //check existing user
-        const userExists = await User.findOne({email});
+        const userExists = await User.findOne({email: normalizedEmail});
         if(userExists){
             return res.status(400).json({
                 message: "User Already Exists"
@@ -18,9 +32,9 @@ export const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         //create user
-        const user = await User.create({
-            name,
-            email,
+        await User.create({
+            name: trimmedName,
+            email: normalizedEmail,
             password: hashedPassword
         });
 
@@ -39,8 +53,15 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
     try {
         const {email, password} = req.body;
+        const normalizedEmail = email?.trim().toLowerCase();
 
-        const user = await User.findOne({email});
+        if(!normalizedEmail || !password){
+            return res.status(400).json({
+                message: "Email and password are required"
+            });
+        }
+
+        const user = await User.findOne({email: normalizedEmail});
 
         if(!user){
             return res.status(400).json({

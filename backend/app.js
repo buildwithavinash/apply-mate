@@ -4,10 +4,11 @@ import authRoutes from './routes/authRoutes.js'
 import cors from 'cors'
 
 const app = express();
+const allowedOrigins = process.env.CLIENT_URL ? [process.env.CLIENT_URL] : "*";
 
 // middleware
 app.use(cors({
-    origin: "*",
+    origin: allowedOrigins,
 }));
 app.use(express.json());
 
